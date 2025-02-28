@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
-@Tag(name = "Resource API", description = "require authentication")
+@RequestMapping("/public")
+@Tag(name = "Resource API", description = "no authentication required")
 @RequiredArgsConstructor
-public class AuthorizationController {
+public class PublicController {
 
     @GetMapping(value = "/v1/resource")
     public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok("Here is your resource");
+        return ResponseEntity.ok("Here is your public resource");
     }
 }

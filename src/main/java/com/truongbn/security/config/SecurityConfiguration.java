@@ -1,7 +1,7 @@
 package com.truongbn.security.config;
 
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
+import com.truongbn.security.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,9 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.truongbn.security.service.UserService;
-
-import lombok.RequiredArgsConstructor;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
@@ -26,11 +24,28 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserService userService;
+
+    private static final String[] AUTH_WHITELIST = {
+            // Health Check APIs
+            "/",
+            "/actuator/**",
+            // OpenAPI 3.0
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            // Public APIs
+            "/public/v*/**",
+            // Authentication
+            "/api/v*/auth/**"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**")
-                        .permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(request -> {
+                    request.requestMatchers(AUTH_WHITELIST).permitAll();
+                    request.anyRequest().authenticated();
+                })
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
