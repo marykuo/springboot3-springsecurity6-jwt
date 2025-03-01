@@ -1,0 +1,9 @@
+### Public resource
+GET {{host}}/public/v1/resource
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body === "Here is your public resource", `Expected 'Here is your public resource' but received '${response.body}'`)
+    });
+%}

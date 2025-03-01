@@ -1,0 +1,18 @@
+### Health
+GET {{host}}/
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body === "alive", `Expected 'alive' but received '${response.body}'`)
+    });
+%}
+
+### Monitor
+GET {{host}}/actuator
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}

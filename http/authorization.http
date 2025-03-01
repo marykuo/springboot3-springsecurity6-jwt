@@ -1,0 +1,38 @@
+### Private resource without authorization
+GET {{host}}/api/v1/resource
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 401, "Response status is not 401");
+        client.assert(response.body === "未授權的請求，請先登入", `Expected '未授權的請求，請先登入' but received '${response.body}'`)
+    });
+%}
+
+### Signup
+POST {{host}}/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "password": "string"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("token", response.body.token);
+%}
+
+### Private Resource with authorization
+GET {{host}}/api/v1/resource
+Authorization: Bearer {{token}}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body === "Here is your resource", `Expected 'Here is your resource' but received '${response.body}'`)
+    });
+%}
