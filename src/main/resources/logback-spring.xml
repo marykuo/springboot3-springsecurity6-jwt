@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <!-- Defines logging formatting rules -->
+    <!-- clr for color formatting -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <!-- wex for basic exception stack trace display -->
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <!-- wEx for extended exception stack trace display -->
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+    <!-- Read application setting -->
+    <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name" defaultValue="application"/>
+    <springProperty scope="context" name="LOG_FILE_PATH" source="logging.file.path" defaultValue="./logs"/>
+    <springProperty scope="context" name="LOG_FILE_NAME" source="logging.file.name" defaultValue="${APPLICATION_NAME}"/>
+    <springProperty scope="context" name="LOG_MAX_HISTORY" source="logging.logback.rollingpolicy.max-history" defaultValue="90"/>
+    <springProperty scope="context" name="LOG_LEVEL_ROOT" source="logging.level.root" defaultValue="INFO"/>
+    <springProperty scope="context" name="PROFILES_NAME" source="spring.profiles.active" defaultValue="dev"/>
+
+    <!-- Setup general setting for log file -->
+    <property name="COMPLETE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(${PID:- }){magenta} %clr(%-5level) %clr([%thread]){yellow} %clr(%-40.40logger{39}){cyan} %clr(#){green}%clr(%-30.30method){cyan}%clr(#){green}%clr(%-3.3line){yellow} : %msg%n%wEx}}"/>
+    <property name="STANDARD_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(${PID:- }){magenta} %clr(%-5level) %clr([%thread]){yellow} %clr(%-40.40logger{39}){cyan} : %msg%n%wEx}}"/>
+    <property name="LOG_ENCODING" value="UTF-8"/>
+    <property name="LOG_FILE_EXT" value="gz"/>
+
+    <!-- Setup console standard output -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${STANDARD_LOG_PATTERN}</pattern>
+            <charset>${LOG_ENCODING}</charset>
+        </encoder>
+    </appender>
+
+    <!-- Setup log file of debug level -->
+    <appender name="FILE_DEBUG_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <file>${LOG_FILE_PATH}/${LOG_FILE_NAME}.log</file>
+        <encoder>
+            <pattern>${COMPLETE_LOG_PATTERN}</pattern>
+            <charset>${LOG_ENCODING}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_PATH}/%d{yyyyMMdd}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}.%i.log.${LOG_FILE_EXT}</fileNamePattern>
+            <maxFileSize>20MB</maxFileSize>
+            <maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Setup log file of warn level -->
+    <appender name="FILE_WARN_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <file>${LOG_FILE_PATH}/${LOG_FILE_NAME}_warn.log</file>
+        <encoder>
+            <pattern>${STANDARD_LOG_PATTERN}</pattern>
+            <charset>${LOG_ENCODING}</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_PATH}/%d{yyyyMMdd}/${LOG_FILE_NAME}_warn.%d{yyyy-MM-dd}.%i.log.${LOG_FILE_EXT}</fileNamePattern>
+            <maxFileSize>20MB</maxFileSize>
+            <maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Setup log level of each package -->
+    <logger name="com.marykuo" level="DEBUG"/>
+
+    <!-- Enable appender -->
+    <root level="${LOG_LEVEL_ROOT}">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE_DEBUG_LOG"/>
+        <appender-ref ref="FILE_WARN_LOG"/>
+    </root>
+</configuration>
