@@ -1,5 +1,6 @@
 package com.marykuo.security.config.security.component;
 
+import com.marykuo.security.adapter.in.api.response.BaseResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
@@ -19,6 +20,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     ) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write("{\"message\": \"未授權的請求，請先登入\"}");
+        response.getWriter().write(BaseResponse.fail("未授權的請求，請先登入").toString());
     }
 }

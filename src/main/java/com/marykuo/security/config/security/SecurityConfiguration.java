@@ -1,6 +1,7 @@
 package com.marykuo.security.config.security;
 
 import com.marykuo.security.adapter.in.api.filter.JwtAuthenticationFilter;
+import com.marykuo.security.adapter.in.api.response.BaseResponse;
 import com.marykuo.security.config.security.component.CustomAuthenticationEntryPoint;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -114,7 +115,7 @@ public class SecurityConfiguration {
         return (request, response, accessDeniedException) -> {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write("{\"message\": \"無權使用此功能\"}");
+            response.getWriter().write(BaseResponse.fail("無權使用此功能").toString());
         };
     }
 }

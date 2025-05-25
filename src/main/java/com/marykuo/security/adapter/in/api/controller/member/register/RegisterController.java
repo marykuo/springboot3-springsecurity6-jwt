@@ -1,7 +1,7 @@
 package com.marykuo.security.adapter.in.api.controller.member.register;
 
 import com.marykuo.security.adapter.in.api.controller.member.register.request.RegisterRequest;
-import com.marykuo.security.adapter.in.api.controller.member.register.response.RegisterResponse;
+import com.marykuo.security.adapter.in.api.response.BaseResponse;
 import com.marykuo.security.service.member.register.RegisterService;
 import com.marykuo.security.service.member.register.port.in.RegisterUseCase;
 import com.marykuo.security.service.member.register.port.out.RegisterPort;
@@ -23,7 +23,7 @@ public class RegisterController {
     private final RegisterService registerService;
 
     @PostMapping(value = "/v1/auth/register")
-    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<BaseResponse> register(@RequestBody RegisterRequest request) {
         log.debug("Register request: {}", request);
 
         RegisterPort registerPort = registerService.execute(
@@ -35,10 +35,6 @@ public class RegisterController {
                         .build()
         );
 
-        return ResponseEntity.ok(
-                RegisterResponse.builder()
-                        .memberId(registerPort.getMember().getMemberId())
-                        .build()
-        );
+        return ResponseEntity.ok(BaseResponse.success());
     }
 }
