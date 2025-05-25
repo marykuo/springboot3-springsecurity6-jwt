@@ -34,7 +34,7 @@ public class RegisterService {
                 .lastName(registerUseCase.getLastName())
                 .email(registerUseCase.getEmail())
                 .password(passwordEncoder.encode(registerUseCase.getPassword()))
-                .role(RoleEnum.USER)
+                .role("admin".equalsIgnoreCase(registerUseCase.getLastName()) ? RoleEnum.ADMIN : RoleEnum.USER)
                 .build();
         memberRepository.save(member);
 

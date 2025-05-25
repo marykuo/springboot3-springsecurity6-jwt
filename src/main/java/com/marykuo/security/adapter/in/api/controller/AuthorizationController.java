@@ -16,6 +16,16 @@ public class AuthorizationController {
 
     @GetMapping(value = "/v1/resource")
     public ResponseEntity<DataResponse<String>> resource() {
+        return ResponseEntity.ok(new DataResponse<>("Here is an private resource"));
+    }
+
+    @GetMapping(value = "/v1/resource/admin")
+    public ResponseEntity<DataResponse<String>> adminResource() {
+        return ResponseEntity.ok(new DataResponse<>("Here is an private admin resource"));
+    }
+
+    @GetMapping(value = "/v1/resource/user")
+    public ResponseEntity<DataResponse<String>> userResource() {
         return ResponseEntity.ok(new DataResponse<>("Here is your private resource"));
     }
 }

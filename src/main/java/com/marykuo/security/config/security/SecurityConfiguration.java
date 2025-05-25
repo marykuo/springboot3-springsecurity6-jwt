@@ -61,6 +61,11 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers(AUTH_WHITELIST).permitAll();
+
+                    request.requestMatchers("/api/v*/resource/admin").hasRole("ADMIN");
+
+                    request.requestMatchers("/api/v*/resource/user").hasRole("USER");
+
                     request.anyRequest().authenticated();
                 })
                 .exceptionHandling(exceptionHandling -> {
