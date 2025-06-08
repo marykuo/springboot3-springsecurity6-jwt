@@ -1,6 +1,7 @@
 # JWT Authentication and Authorization with Spring Boot 3 and Spring Security 6
 
-This repository provides a implementation of **JWT-based authentication and authorization** using **Spring Boot 3** and **Spring Security 6**, following Clean Architecture.
+This repository provides a implementation of **JWT-based authentication and authorization** using **Spring Boot 3** and
+**Spring Security 6**, following Clean Architecture.
 
 ## Overview
 
@@ -13,15 +14,15 @@ This project demonstrates:
 
 ## Tech Stack
 
-| Category           | Technology                       |
-|--------------------|----------------------------------|
-| Language           | Java 17                          |
-| Frameworks         | Spring Boot 3, Spring Security 6 |
-| Authentication     | JWT (JSON Web Token), BCrypt     |
-| Persistence        | JPA (Hibernate), H2 Database     |
-| Build Tool         | Maven                            |
-| Documentation      | Springdoc OpenAPI                |
-| Monitoring         | Spring Boot Actuator             |
+| Category       | Technology                       |
+|----------------|----------------------------------|
+| Language       | Java 17                          |
+| Frameworks     | Spring Boot 3, Spring Security 6 |
+| Authentication | JWT (JSON Web Token), BCrypt     |
+| Persistence    | JPA (Hibernate), H2 Database     |
+| Build Tool     | Maven                            |
+| Documentation  | Springdoc OpenAPI                |
+| Monitoring     | Spring Boot Actuator             |
 
 ## Features
 
@@ -79,6 +80,10 @@ This project adopts **Clean Architecture** to achieve high maintainability and s
 
 ## Quick Start
 
+### Maven
+
+Ensure you have **Java 17** and **Maven** installed. You can run the application using the following commands:
+
 ```bash
 # Clone the repository
 git clone https://github.com/marykuo/springboot3-springsecurity6-jwt.git
@@ -93,22 +98,35 @@ mvn spring-boot:run
 
 You may also refer to the included **HTTP request test files** to explore endpoints.
 
+### Docker
+
+This project includes a Dockerfile for easy deployment. Ensure you have **Docker** installed, then follow these steps:
+
+1. Build the Docker image:
+   ```
+   docker build -t springboot3-springsecurity6-jwt -f Dockerfile .
+   ```
+2. Run the Docker container:
+   ```
+   docker run -d -p 8080:8080 springboot3-springsecurity6-jwt
+   ```
+
 ## Configuration Notes
 
-- To disable storing plain-text passwords, set active profile to `prod`, or update the `PasswordEncoder` bean in `SecurityConfiguration.java`.
+- To disable storing plain-text passwords, set active profile to `prod`, or update the `PasswordEncoder` bean in
+  `SecurityConfiguration.java`.
 - For OpenAPI config, update `openapi.properties`. To disable OpenAPI, set:
   ```properties
   springdoc.api-docs.enabled=false
   ```
 - Profiles included:
-  - local-h2 (default)
-  - local-postgres
-  - uat
-  - prod
+    - local-h2 (default)
+    - local-postgres
+    - uat
+    - prod
 
 ## TODO
 
-- [ ] Dockerized the application
 - [ ] Add refresh token mechanism
 - [ ] Add CORS configuration
 - [ ] Add additional test coverage
