@@ -1,0 +1,78 @@
+### login as admin
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@string",
+  "password": "string"
+}
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 200, "status");
+        client.assert(response.headers.valueOf("content-type") === "application/json", "content-type");
+        client.assert(response.body.result === true, "result");
+        client.assert(response.body.message === "success", "message");
+        client.assert(response.body.data.token !== undefined, "data.token");
+
+        client.global.set("token", response.body.data.token);
+    });
+%}
+
+### public resource
+GET {{host}}/public/v1/resource
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 200, "status");
+        client.assert(response.body.result === true, "result");
+        client.assert(response.body.message === "success", "message");
+        client.assert(response.body.data.id === 1, "data.id");
+        client.assert(response.body.data.name === "Here is your public resource", "data.name");
+    });
+%}
+
+### authenticated resource
+GET {{host}}/api/v1/resource
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 200, "status");
+        client.assert(response.body.result === true, "result");
+        client.assert(response.body.message === "success", "message");
+        client.assert(response.body.data.id === 2, "data.id");
+        client.assert(response.body.data.name === "Here is an private resource", "data.name");
+    });
+%}
+
+### admin resource
+GET {{host}}/api/v1/resource/admin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 200, "status");
+        client.assert(response.body.result === true, "result");
+        client.assert(response.body.message === "success", "message");
+        client.assert(response.body.data.id === 3, "data.id");
+        client.assert(response.body.data.name === "Here is an private admin resource", "data.name");
+    });
+%}
+
+### user resource
+GET {{host}}/api/v1/resource/user
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 403, "status");
+        client.assert(response.body.result === false, "result");
+        client.assert(response.body.message === "無權使用此功能", "message");
+    });
+%}

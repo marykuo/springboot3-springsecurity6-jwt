@@ -1,0 +1,56 @@
+### health
+GET {{host}}/
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 200, "status");
+        client.assert(response.body === "alive", "body");
+    });
+%}
+
+### public resource
+GET {{host}}/public/v1/resource
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 200, "status");
+        client.assert(response.body.data.id === 1, "data.id");
+        client.assert(response.body.data.name === "Here is your public resource", "data.name");
+    });
+%}
+
+### authenticated resource
+GET {{host}}/api/v1/resource
+Content-Type: application/json
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 401, "status");
+        client.assert(response.body.result === false, "result");
+        client.assert(response.body.message === "未授權的請求，請先登入", "message");
+    });
+%}
+
+### admin resource
+GET {{host}}/api/v1/resource/admin
+Content-Type: application/json
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 401, "status");
+        client.assert(response.body.result === false, "result");
+        client.assert(response.body.message === "未授權的請求，請先登入", "message");
+    });
+%}
+
+### user resource
+GET {{host}}/api/v1/resource/user
+Content-Type: application/json
+
+> {%
+    client.test("Response", function () {
+        client.assert(response.status === 401, "status");
+        client.assert(response.body.result === false, "result");
+        client.assert(response.body.message === "未授權的請求，請先登入", "message");
+    });
+%}
