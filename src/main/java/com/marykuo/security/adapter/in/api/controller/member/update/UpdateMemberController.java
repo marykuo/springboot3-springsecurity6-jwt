@@ -25,9 +25,8 @@ public class UpdateMemberController {
 
     @PutMapping(value = "/v1/member")
     public ResponseEntity<DataResponse<UpdateMemberResponse>> update(@RequestBody UpdateMemberRequest request) {
-        log.debug("login: {}", request);
+        log.debug("UpdateMemberRequest: {}", request);
 
-        // authenticate
         UpdateMemberPort updateMemberPort = updateMemberService.execute(
                 UpdateMemberUseCase.builder()
                         .memberId(request.getMemberId())

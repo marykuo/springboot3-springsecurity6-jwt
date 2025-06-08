@@ -24,7 +24,7 @@ public class RegisterController {
 
     @PostMapping(value = "/v1/auth/register")
     public ResponseEntity<BaseResponse> register(@RequestBody RegisterRequest request) {
-        log.debug("Register request: {}", request);
+        log.debug("RegisterRequest: {}", request);
 
         RegisterPort registerPort = registerService.execute(
                 RegisterUseCase.builder()

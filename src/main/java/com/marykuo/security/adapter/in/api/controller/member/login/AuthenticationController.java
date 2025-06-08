@@ -28,9 +28,8 @@ public class AuthenticationController {
 
     @PostMapping(value = "/v1/auth/login")
     public ResponseEntity<DataResponse<LoginResponse>> login(@RequestBody LoginRequest request) {
-        log.debug("login: {}", request);
+        log.debug("LoginRequest: {}", request);
 
-        // authenticate
         AuthenticationPort authenticationPort = authenticationService.execute(
                 AuthenticationUseCase.builder()
                         .email(request.getEmail())
@@ -38,7 +37,6 @@ public class AuthenticationController {
                         .build()
         );
 
-        // login
         String jwtToken = jwtService.generateToken((MemberEntity) authenticationPort.getMember());
 
         return ResponseEntity.ok(new DataResponse<>(
