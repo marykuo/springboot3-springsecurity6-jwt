@@ -130,5 +130,4 @@ This project includes a Dockerfile for easy deployment. Ensure you have **Docker
 - [ ] Add refresh token mechanism
 - [ ] Add CORS configuration
 - [ ] Add additional test coverage
-- [ ] Optimize domain model and service layers
 - [ ] Document logging and monitoring strategy

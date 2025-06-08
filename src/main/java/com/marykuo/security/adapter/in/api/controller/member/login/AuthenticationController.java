@@ -3,6 +3,7 @@ package com.marykuo.security.adapter.in.api.controller.member.login;
 import com.marykuo.security.adapter.in.api.controller.member.login.request.LoginRequest;
 import com.marykuo.security.adapter.in.api.controller.member.login.response.LoginResponse;
 import com.marykuo.security.adapter.in.api.response.DataResponse;
+import com.marykuo.security.adapter.out.database.entity.MemberEntity;
 import com.marykuo.security.config.security.component.JwtService;
 import com.marykuo.security.service.member.authentication.AuthenticationService;
 import com.marykuo.security.service.member.authentication.port.in.AuthenticationUseCase;
@@ -38,7 +39,7 @@ public class AuthenticationController {
         );
 
         // login
-        String jwtToken = jwtService.generateToken(authenticationPort.getMember());
+        String jwtToken = jwtService.generateToken((MemberEntity) authenticationPort.getMember());
 
         return ResponseEntity.ok(new DataResponse<>(
                 LoginResponse.builder()

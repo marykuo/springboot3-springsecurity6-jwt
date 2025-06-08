@@ -1,7 +1,7 @@
 package com.marykuo.security.service.member.register;
 
-import com.marykuo.security.adapter.out.database.entity.MemberEntity;
-import com.marykuo.security.adapter.out.database.repository.MemberRepository;
+import com.marykuo.security.adapter.out.database.MemberRepository;
+import com.marykuo.security.domain.member.Member;
 import com.marykuo.security.domain.member.RoleEnum;
 import com.marykuo.security.service.member.register.port.in.RegisterUseCase;
 import com.marykuo.security.service.member.register.port.out.RegisterPort;
@@ -29,7 +29,7 @@ public class RegisterService {
         }
 
         // execute
-        MemberEntity member = MemberEntity.builder()
+        Member member = Member.builder()
                 .firstName(registerUseCase.getFirstName())
                 .lastName(registerUseCase.getLastName())
                 .email(registerUseCase.getEmail())

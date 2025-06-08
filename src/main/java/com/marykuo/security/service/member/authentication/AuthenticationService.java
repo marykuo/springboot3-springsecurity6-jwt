@@ -1,7 +1,7 @@
 package com.marykuo.security.service.member.authentication;
 
-import com.marykuo.security.adapter.out.database.entity.MemberEntity;
-import com.marykuo.security.adapter.out.database.repository.MemberRepository;
+import com.marykuo.security.adapter.out.database.MemberRepository;
+import com.marykuo.security.domain.member.Member;
 import com.marykuo.security.service.member.authentication.port.in.AuthenticationUseCase;
 import com.marykuo.security.service.member.authentication.port.out.AuthenticationPort;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class AuthenticationService {
         } catch (AuthenticationException e) {
             throw new IllegalArgumentException("Invalid email or password.");
         }
-        MemberEntity member = memberRepository.findByEmail(authenticationUseCase.getEmail())
+        Member member = memberRepository.findByEmail(authenticationUseCase.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
         return AuthenticationPort.builder()
