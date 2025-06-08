@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.LOGIN;
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_PUBLIC;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping(ROOT_PUBLIC)
 @Tag(name = "Authentication")
 @RequiredArgsConstructor
 @Slf4j
@@ -26,7 +29,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final JwtService jwtService;
 
-    @PostMapping(value = "/v1/auth/login")
+    @PostMapping(value = "/v1" + LOGIN)
     public ResponseEntity<DataResponse<LoginResponse>> login(@RequestBody LoginRequest request) {
         log.debug("LoginRequest: {}", request);
 

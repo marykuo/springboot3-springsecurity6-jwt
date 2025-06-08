@@ -14,15 +14,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.REGISTER;
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_PUBLIC;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping(ROOT_PUBLIC)
 @Tag(name = "Register")
 @RequiredArgsConstructor
 @Slf4j
 public class RegisterController {
     private final RegisterService registerService;
 
-    @PostMapping(value = "/v1/auth/register")
+    @PostMapping(value = "/v1" + REGISTER)
     public ResponseEntity<BaseResponse> register(@RequestBody RegisterRequest request) {
         log.debug("RegisterRequest: {}", request);
 

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_API;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping(ROOT_API)
 @Tag(name = "Resource API", description = "require authentication")
 @RequiredArgsConstructor
 public class QueryAuthorizationResourceController {

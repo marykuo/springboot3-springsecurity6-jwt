@@ -6,7 +6,6 @@ import lombok.Getter;
 
 @Getter
 public class UpdateMemberRequest {
-    private Integer memberId;
     private String firstName;
     private String lastName;
     private String password;

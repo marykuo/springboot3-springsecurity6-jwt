@@ -27,6 +27,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.MEMBER_PAGINATION;
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_PUBLIC;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -45,10 +47,7 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             // Public APIs
-            "/public/v*/**",
-            "/api/v*/auth/register",
-            // Authentication
-            "/api/v*/auth/**"
+            ROOT_PUBLIC + "**",
     };
 
     @Bean
@@ -62,9 +61,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers(AUTH_WHITELIST).permitAll();
 
-                    request.requestMatchers("/api/v*/resource/admin").hasRole("ADMIN");
+                    request.requestMatchers(
+                            "/api/v*/resource/admin",
+                            MEMBER_PAGINATION
+                    ).hasRole("ADMIN");
 
-                    request.requestMatchers("/api/v*/resource/user").hasRole("USER");
+                    request.requestMatchers(
+                            "/api/v*/resource/user"
+                    ).hasRole("USER");
 
                     request.anyRequest().authenticated();
                 })
