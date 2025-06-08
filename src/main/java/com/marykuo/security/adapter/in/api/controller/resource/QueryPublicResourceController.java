@@ -1,5 +1,6 @@
-package com.marykuo.security.adapter.in.api.controller;
+package com.marykuo.security.adapter.in.api.controller.resource;
 
+import com.marykuo.security.adapter.in.api.controller.resource.response.QueryResourceResponse;
 import com.marykuo.security.adapter.in.api.response.DataResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/public")
 @Tag(name = "Resource API", description = "no authentication required")
 @RequiredArgsConstructor
-public class PublicController {
+public class QueryPublicResourceController {
 
     @GetMapping(value = "/v1/resource")
-    public ResponseEntity<DataResponse<String>> resource() {
-        return ResponseEntity.ok(new DataResponse<>("Here is your public resource"));
+    public ResponseEntity<DataResponse<QueryResourceResponse>> resource() {
+        return ResponseEntity.ok(new DataResponse<>(QueryResourceResponse.builder()
+                .id(1)
+                .name("Here is your public resource")
+                .build()
+        ));
     }
 }

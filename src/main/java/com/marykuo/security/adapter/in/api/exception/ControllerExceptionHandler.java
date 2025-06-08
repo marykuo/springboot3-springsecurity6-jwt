@@ -16,7 +16,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<BaseResponse> handler(RuntimeException e) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .contentType(MediaType.TEXT_PLAIN)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(new BaseResponse(e.getMessage()));
     }
 
