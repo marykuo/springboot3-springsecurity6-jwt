@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -27,8 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.MEMBER_PAGINATION;
-import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_PUBLIC;
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -47,7 +47,9 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             // Public APIs
-            ROOT_PUBLIC + "**",
+            ROOT_PUBLIC + "/**",
+            ROOT_API + "/v*" + LOGIN,
+            ROOT_API + "/v*" + REGISTER
     };
 
     @Bean
@@ -61,14 +63,10 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers(AUTH_WHITELIST).permitAll();
 
-                    request.requestMatchers(
-                            "/api/v*/resource/admin",
-                            MEMBER_PAGINATION
-                    ).hasRole("ADMIN");
+                    request.requestMatchers(HttpMethod.GET, ROOT_API + "/v*" + MEMBER).hasRole("ADMIN");
 
-                    request.requestMatchers(
-                            "/api/v*/resource/user"
-                    ).hasRole("USER");
+                    request.requestMatchers("/api/v*/resource/admin").hasRole("ADMIN");
+                    request.requestMatchers("/api/v*/resource/user").hasRole("USER");
 
                     request.anyRequest().authenticated();
                 })

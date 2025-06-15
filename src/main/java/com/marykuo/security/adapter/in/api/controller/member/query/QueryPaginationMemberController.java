@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.MEMBER_PAGINATION;
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.MEMBER;
 import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_API;
 import static com.marykuo.security.adapter.in.api.filter.JwtAuthenticationFilter.LOGIN_MEMBER;
 
@@ -23,7 +23,7 @@ import static com.marykuo.security.adapter.in.api.filter.JwtAuthenticationFilter
 public class QueryPaginationMemberController {
     private final MemberRepository memberRepository;
 
-    @GetMapping(value = "/v1" + MEMBER_PAGINATION)
+    @GetMapping(value = "/v1" + MEMBER)
     public ResponseEntity<PaginationResponse<QueryPaginationMemberResponse>> query(
             @RequestAttribute(LOGIN_MEMBER) MemberEntity loginMember,
             @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,

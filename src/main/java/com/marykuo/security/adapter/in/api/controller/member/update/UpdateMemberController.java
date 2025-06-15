@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
-import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.MEMBER_UPDATE;
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.MEMBER_SINGLE;
 import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_API;
 import static com.marykuo.security.adapter.in.api.filter.JwtAuthenticationFilter.LOGIN_MEMBER;
 
@@ -28,7 +28,7 @@ import static com.marykuo.security.adapter.in.api.filter.JwtAuthenticationFilter
 public class UpdateMemberController {
     private final UpdateMemberService updateMemberService;
 
-    @PutMapping(value = "/v1" + MEMBER_UPDATE)
+    @PutMapping(value = "/v1" + MEMBER_SINGLE)
     public ResponseEntity<DataResponse<UpdateMemberResponse>> update(
             @RequestAttribute(LOGIN_MEMBER) MemberEntity loginMember,
             @PathVariable("memberId") Integer memberId,

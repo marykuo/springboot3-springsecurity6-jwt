@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.REGISTER;
-import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_PUBLIC;
+import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_API;
 
 @RestController
-@RequestMapping(ROOT_PUBLIC)
+@RequestMapping(ROOT_API)
 @Tag(name = "Register")
 @RequiredArgsConstructor
 @Slf4j

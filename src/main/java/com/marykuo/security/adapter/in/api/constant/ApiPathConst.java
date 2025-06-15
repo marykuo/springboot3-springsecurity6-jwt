@@ -10,7 +10,6 @@ public class ApiPathConst {
     public static final String LOGIN = "/auth/login";
     public static final String REGISTER = "/auth/register";
 
-    public static final String MEMBER_PAGINATION = "/member";
+    public static final String MEMBER = "/member";
     public static final String MEMBER_SINGLE = "/member/{memberId}";
-    public static final String MEMBER_UPDATE = "/member/{memberId}";
 }
