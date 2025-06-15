@@ -1,11 +1,9 @@
 package com.marykuo.security.adapter.in.api.response;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 
 @Getter
-public class BaseResponse {
+public class BaseResponse extends Response {
     protected boolean result;
     protected String code;
     protected String message;
@@ -44,14 +42,5 @@ public class BaseResponse {
 
     public static BaseResponse fail(String code, String message) {
         return new BaseResponse(false, code, message);
-    }
-
-    @Override
-    public String toString() {
-        try {
-            return (new ObjectMapper()).writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return this.getClass() + " toString() error";
-        }
     }
 }

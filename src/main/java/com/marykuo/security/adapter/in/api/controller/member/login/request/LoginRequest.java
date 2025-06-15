@@ -1,20 +1,10 @@
 package com.marykuo.security.adapter.in.api.controller.member.login.request;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.marykuo.security.adapter.in.api.request.Request;
 import lombok.Getter;
 
 @Getter
-public class LoginRequest {
+public class LoginRequest extends Request {
     private String email;
     private String password;
-
-    @Override
-    public String toString() {
-        try {
-            return (new ObjectMapper()).writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return this.getClass() + " toString() error";
-        }
-    }
 }

@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,6 +42,14 @@ public class MemberEntity extends Member implements UserDetails {
     @Enumerated(EnumType.STRING)
     public RoleEnum getRole() {
         return super.role;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return super.createdAt;
+    }
+
+    public LocalDateTime getModifiedAt() {
+        return super.modifiedAt;
     }
 
     public MemberEntity() {

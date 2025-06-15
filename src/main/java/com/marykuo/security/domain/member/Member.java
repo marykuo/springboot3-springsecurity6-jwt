@@ -1,15 +1,17 @@
 package com.marykuo.security.domain.member;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.marykuo.security.domain.DomainModel;
+import com.marykuo.security.usecase.member.register.input.RegisterInput;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+public class Member extends DomainModel {
     protected Long memberId;
 
     protected String firstName;
@@ -22,12 +24,17 @@ public class Member {
 
     protected RoleEnum role;
 
-    @Override
-    public String toString() {
-        try {
-            return (new ObjectMapper()).writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return this.getClass() + " toString() error";
-        }
+    protected LocalDateTime createdAt;
+
+    protected LocalDateTime modifiedAt;
+
+    public Member(RegisterInput registerInput, String encodedPassword, RoleEnum role) {
+        this.firstName = registerInput.getFirstName();
+        this.lastName = registerInput.getLastName();
+        this.email = registerInput.getEmail();
+        this.password = encodedPassword;
+        this.role = role;
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
 }

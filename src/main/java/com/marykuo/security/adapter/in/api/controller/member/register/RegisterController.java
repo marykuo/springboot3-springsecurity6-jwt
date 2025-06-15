@@ -1,10 +1,11 @@
 package com.marykuo.security.adapter.in.api.controller.member.register;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marykuo.security.adapter.in.api.controller.member.register.request.RegisterRequest;
 import com.marykuo.security.adapter.in.api.response.BaseResponse;
-import com.marykuo.security.service.member.register.RegisterService;
-import com.marykuo.security.service.member.register.port.in.RegisterUseCase;
-import com.marykuo.security.service.member.register.port.out.RegisterPort;
+import com.marykuo.security.usecase.member.register.RegisterService;
+import com.marykuo.security.usecase.member.register.input.RegisterInput;
+import com.marykuo.security.usecase.member.register.output.RegisterOutput;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +25,14 @@ import static com.marykuo.security.adapter.in.api.constant.ApiPathConst.ROOT_API
 @Slf4j
 public class RegisterController {
     private final RegisterService registerService;
+    private final ObjectMapper objectMapper;
 
     @PostMapping(value = "/v1" + REGISTER)
     public ResponseEntity<BaseResponse> register(@RequestBody RegisterRequest request) {
         log.debug("RegisterRequest: {}", request);
 
-        RegisterPort registerPort = registerService.execute(
-                RegisterUseCase.builder()
+        RegisterOutput registerOutput = registerService.execute(
+                RegisterInput.builder()
                         .firstName(request.getFirstName())
                         .lastName(request.getLastName())
                         .email(request.getEmail())

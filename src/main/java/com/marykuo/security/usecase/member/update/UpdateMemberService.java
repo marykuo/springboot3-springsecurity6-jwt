@@ -1,9 +1,9 @@
-package com.marykuo.security.service.member.update;
+package com.marykuo.security.usecase.member.update;
 
 import com.marykuo.security.adapter.out.database.MemberRepository;
 import com.marykuo.security.domain.member.Member;
-import com.marykuo.security.service.member.update.port.in.UpdateMemberUseCase;
-import com.marykuo.security.service.member.update.port.out.UpdateMemberPort;
+import com.marykuo.security.usecase.member.update.input.UpdateMemberInput;
+import com.marykuo.security.usecase.member.update.output.UpdateMemberOutput;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,23 +18,23 @@ public class UpdateMemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public UpdateMemberPort execute(UpdateMemberUseCase updateMemberUseCase) {
-        log.info("UpdateMemberUseCase: {}", updateMemberUseCase);
+    public UpdateMemberOutput execute(UpdateMemberInput updateMemberInput) {
+        log.info("UpdateMemberUseCase: {}", updateMemberInput);
 
         // validate input
-        updateMemberUseCase.validate();
+        updateMemberInput.validate();
 
         // validate data
-        Member member = memberRepository.findById(updateMemberUseCase.getMemberId())
+        Member member = memberRepository.findById(updateMemberInput.getMemberId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
         // execute
-        member.setFirstName(updateMemberUseCase.getFirstName());
-        member.setLastName(updateMemberUseCase.getLastName());
-        member.setPassword(passwordEncoder.encode(updateMemberUseCase.getPassword()));
+        member.setFirstName(updateMemberInput.getFirstName());
+        member.setLastName(updateMemberInput.getLastName());
+        member.setPassword(passwordEncoder.encode(updateMemberInput.getPassword()));
         memberRepository.save(member);
 
-        return UpdateMemberPort.builder()
+        return UpdateMemberOutput.builder()
                 .member(member)
                 .build();
     }

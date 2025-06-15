@@ -1,7 +1,5 @@
 package com.marykuo.security.adapter.in.api.response;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 
 import java.util.List;
@@ -30,14 +28,5 @@ public class PaginationResponse<T> extends BaseResponse {
         this.totalPages = totalPages;
         this.currentPage = currentPage;
         this.limitPerPage = limitPerPage;
-    }
-
-    @Override
-    public String toString() {
-        try {
-            return (new ObjectMapper()).writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return this.getClass() + " toString() error";
-        }
     }
 }

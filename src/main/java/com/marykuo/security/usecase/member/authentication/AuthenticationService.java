@@ -1,9 +1,9 @@
-package com.marykuo.security.service.member.authentication;
+package com.marykuo.security.usecase.member.authentication;
 
 import com.marykuo.security.adapter.out.database.MemberRepository;
 import com.marykuo.security.domain.member.Member;
-import com.marykuo.security.service.member.authentication.port.in.AuthenticationUseCase;
-import com.marykuo.security.service.member.authentication.port.out.AuthenticationPort;
+import com.marykuo.security.usecase.member.authentication.input.AuthenticationInput;
+import com.marykuo.security.usecase.member.authentication.output.AuthenticationOutput;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,22 +18,22 @@ public class AuthenticationService {
     private final MemberRepository memberRepository;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationPort execute(AuthenticationUseCase authenticationUseCase) {
-        log.info("AuthenticationUseCase: {}", authenticationUseCase);
+    public AuthenticationOutput execute(AuthenticationInput authenticationInput) {
+        log.info("AuthenticationUseCase: {}", authenticationInput);
 
         // validate input
-        authenticationUseCase.validate();
+        authenticationInput.validate();
 
         // validate data
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationUseCase.getEmail(), authenticationUseCase.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationInput.getEmail(), authenticationInput.getPassword()));
         } catch (AuthenticationException e) {
             throw new IllegalArgumentException("Invalid email or password.");
         }
-        Member member = memberRepository.findByEmail(authenticationUseCase.getEmail())
+        Member member = memberRepository.findByEmail(authenticationInput.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
-        return AuthenticationPort.builder()
+        return AuthenticationOutput.builder()
                 .member(member)
                 .build();
     }

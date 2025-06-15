@@ -1,26 +1,16 @@
-package com.marykuo.security.service.member.update.port.in;
+package com.marykuo.security.usecase.member.update.input;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.marykuo.security.usecase.Input;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-public class UpdateMemberUseCase {
+public class UpdateMemberInput extends Input {
     private Long memberId;
     private String firstName;
     private String lastName;
     private String password;
-
-    @Override
-    public String toString() {
-        try {
-            return (new ObjectMapper()).writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            return this.getClass() + " toString() error";
-        }
-    }
 
     public void validate() {
         if (memberId == null) {

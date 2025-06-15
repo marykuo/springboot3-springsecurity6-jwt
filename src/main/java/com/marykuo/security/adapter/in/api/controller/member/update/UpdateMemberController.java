@@ -5,9 +5,9 @@ import com.marykuo.security.adapter.in.api.controller.member.update.response.Upd
 import com.marykuo.security.adapter.in.api.response.DataResponse;
 import com.marykuo.security.adapter.out.database.entity.MemberEntity;
 import com.marykuo.security.domain.member.RoleEnum;
-import com.marykuo.security.service.member.update.UpdateMemberService;
-import com.marykuo.security.service.member.update.port.in.UpdateMemberUseCase;
-import com.marykuo.security.service.member.update.port.out.UpdateMemberPort;
+import com.marykuo.security.usecase.member.update.UpdateMemberService;
+import com.marykuo.security.usecase.member.update.input.UpdateMemberInput;
+import com.marykuo.security.usecase.member.update.output.UpdateMemberOutput;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,8 +40,8 @@ public class UpdateMemberController {
             throw new NoSuchElementException();
         }
 
-        UpdateMemberPort updateMemberPort = updateMemberService.execute(
-                UpdateMemberUseCase.builder()
+        UpdateMemberOutput updateMemberOutput = updateMemberService.execute(
+                UpdateMemberInput.builder()
                         .memberId(loginMember.getMemberId())
                         .firstName(request.getFirstName())
                         .lastName(request.getLastName())
@@ -51,8 +51,8 @@ public class UpdateMemberController {
 
         return ResponseEntity.ok(new DataResponse<>(
                 UpdateMemberResponse.builder()
-                        .firstName(updateMemberPort.getMember().getFirstName())
-                        .lastName(updateMemberPort.getMember().getLastName())
+                        .firstName(updateMemberOutput.getMember().getFirstName())
+                        .lastName(updateMemberOutput.getMember().getLastName())
                         .build()
         ));
     }

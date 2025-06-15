@@ -1,0 +1,12 @@
+package com.marykuo.security.usecase.member.update.output;
+
+import com.marykuo.security.domain.member.Member;
+import com.marykuo.security.usecase.Output;
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
+public class UpdateMemberOutput extends Output {
+    private Member member;
+}
