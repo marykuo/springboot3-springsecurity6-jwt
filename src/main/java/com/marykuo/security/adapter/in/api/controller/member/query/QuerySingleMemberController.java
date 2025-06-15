@@ -28,7 +28,7 @@ public class QuerySingleMemberController {
     @GetMapping(value = "/v1" + MEMBER_SINGLE)
     public ResponseEntity<DataResponse<QuerySingleMemberResponse>> query(
             @RequestAttribute(LOGIN_MEMBER) MemberEntity loginMember,
-            @PathVariable("memberId") Integer memberId
+            @PathVariable("memberId") Long memberId
     ) {
         log.debug("member[{}] query member[{}]", loginMember.getMemberId(), memberId);
 

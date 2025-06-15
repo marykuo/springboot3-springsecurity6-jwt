@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class QuerySingleMemberResponse {
-    private Integer memberId;
+    private Long memberId;
     private String firstName;
     private String lastName;
 }

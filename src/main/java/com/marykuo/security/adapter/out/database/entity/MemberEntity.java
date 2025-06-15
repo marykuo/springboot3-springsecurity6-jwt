@@ -17,7 +17,7 @@ public class MemberEntity extends Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_id_sequence")
     @SequenceGenerator(name = "member_id_sequence", sequenceName = "member_id_sequence", allocationSize = 1)
-    public Integer getMemberId() {
+    public Long getMemberId() {
         return super.memberId;
     }
 
@@ -48,7 +48,13 @@ public class MemberEntity extends Member implements UserDetails {
     }
 
     public MemberEntity(Member member) {
-        super(member.getMemberId(), member.getFirstName(), member.getLastName(), member.getEmail(), member.getPassword(), member.getRole());
+        super();
+        this.memberId = member.getMemberId();
+        this.firstName = member.getFirstName();
+        this.lastName = member.getLastName();
+        this.email = member.getEmail();
+        this.password = member.getPassword();
+        this.role = member.getRole();
     }
 
     @Override

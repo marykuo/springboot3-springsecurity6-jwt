@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class UpdateMemberUseCase {
-    private Integer memberId;
+    private Long memberId;
     private String firstName;
     private String lastName;
     private String password;

@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
-    protected Integer memberId;
+    protected Long memberId;
 
     protected String firstName;
 

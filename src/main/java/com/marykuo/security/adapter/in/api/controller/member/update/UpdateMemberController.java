@@ -31,7 +31,7 @@ public class UpdateMemberController {
     @PutMapping(value = "/v1" + MEMBER_SINGLE)
     public ResponseEntity<DataResponse<UpdateMemberResponse>> update(
             @RequestAttribute(LOGIN_MEMBER) MemberEntity loginMember,
-            @PathVariable("memberId") Integer memberId,
+            @PathVariable("memberId") Long memberId,
             @RequestBody UpdateMemberRequest request
     ) {
         log.debug("member[{}] update member[{}] with request: {}", loginMember.getMemberId(), memberId, request);

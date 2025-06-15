@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface MemberRepository {
     MemberEntity save(Member member);
 
-    Optional<MemberEntity> findById(Integer memberId);
+    Optional<MemberEntity> findById(Long memberId);
 
     Optional<MemberEntity> findByEmail(String email);
 

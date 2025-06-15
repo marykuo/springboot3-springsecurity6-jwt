@@ -21,7 +21,7 @@ public class MemberRepositoryImpl implements MemberRepository {
         return memberJpaRepository.save(new MemberEntity(member));
     }
 
-    public Optional<MemberEntity> findById(Integer memberId) {
+    public Optional<MemberEntity> findById(Long memberId) {
         return memberJpaRepository.findById(memberId);
     }
 

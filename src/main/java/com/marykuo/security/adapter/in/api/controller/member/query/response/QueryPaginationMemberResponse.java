@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class QueryPaginationMemberResponse {
-    private Integer memberId;
+    private Long memberId;
     private String firstName;
     private String lastName;
 
